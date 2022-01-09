@@ -17,6 +17,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedOptionPosition : Int = 0
     private var mUserName : String? = null
     private var mCorrectAnswers : Int = 0
+    private var enableBtns : Boolean = false
 
     private var progressBar : ProgressBar? = null
     private var tvProgress : TextView? = null
@@ -103,6 +104,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectedOptionView(tv : TextView, selectedOptionNum : Int){
+        if(enableBtns) return
         defaultOptionsView()
         mSelectedOptionPosition = selectedOptionNum
 
@@ -142,6 +144,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
                     when{
                         mCurrentPosition <= mQuestionsList!!.size -> {
+                            enableBtns = false
                             setQuestion()
                         }
                         else -> {
@@ -161,6 +164,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         mCorrectAnswers++
                     }
                     answerView(question.correctAnswer, R.drawable.correct_option_border_bg)
+                    enableBtns = true
                     if(mCurrentPosition == mQuestionsList!!.size){
                         btnSubmit?.text = "FINISH"
                     } else {
